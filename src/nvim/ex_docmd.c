@@ -3442,6 +3442,9 @@ const char * set_one_cmd_context(
   case CMD_profile:
     set_context_in_profile_cmd(xp, arg);
     break;
+  case CMD_checkhealth:
+    set_context_in_checkhealth_cmd(xp, arg);
+    break;
   case CMD_behave:
     xp->xp_context = EXPAND_BEHAVE;
     xp->xp_pattern = (char_u *)arg;

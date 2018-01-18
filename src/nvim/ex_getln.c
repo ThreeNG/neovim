@@ -4718,6 +4718,7 @@ ExpandFromContext (
       { EXPAND_CSCOPE, get_cscope_name, true, true },
       { EXPAND_SIGN, get_sign_name, true, true },
       { EXPAND_PROFILE, get_profile_name, true, true },
+      { EXPAND_CHECKHEALTH, get_checkhealth_name, false, false },
 #ifdef HAVE_WORKING_LIBINTL
       { EXPAND_LANGUAGE, get_lang_arg, true, false },
       { EXPAND_LOCALES, get_locales, true, false },

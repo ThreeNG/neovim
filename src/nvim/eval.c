@@ -22538,3 +22538,35 @@ void ex_checkhealth(exarg_T *eap)
 
   xfree(buf);
 }
+
+/// Function given to ExpandGeneric() to obtain expansion specific
+/// to the checkhealth command.
+char_u *get_checkhealth_name(expand_T *xp, int idx)
+{
+  garray_T ga;
+  ga_init(&ga, (int)sizeof(char_u *), 10);
+  globpath(p_rtp, (char_u *)"autoload/health/*.vim", &ga, 0);
+
+  if (idx < ga.ga_len) {
+    size_t usedlen = 0, matchlen;
+    char_u *entry = ((char_u **)ga.ga_data)[idx];
+    (void)modify_fname((char_u *)":t:r", &usedlen, &entry, NULL, &matchlen);
+    entry[matchlen] = NUL;
+    return entry;
+  }
+
+  return NULL;
+}
+
+/// Handle command line completion for :checkhealth command.
+void set_context_in_checkhealth_cmd(expand_T *xp, const char *arg)
+{
+  xp->xp_context = EXPAND_CHECKHEALTH;
+  xp->xp_pattern = (char_u *)arg;
+
+  if (*skiptowhite((const char_u *)arg) == NUL) {
+    return;
+  }
+
+  xp->xp_context = EXPAND_NOTHING;
+}
